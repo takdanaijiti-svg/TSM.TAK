@@ -1,0 +1,6 @@
+{
+  "name": "Taksin Hospital Equipment System",
+  "description": "ระบบยืม-คืน-เบิก อุปกรณ์ งานเวชนิทัศน์และโสตทัศนศึกษา โรงพยาบาลตากสิน",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
