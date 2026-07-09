@@ -7,6 +7,27 @@ import { Equipment } from '../types';
 import { Search, Plus, Filter, LayoutGrid, List, Package } from 'lucide-react';
 import { motion } from 'framer-motion';
 
+function getCategoryBadgeStyle(category: string) {
+  switch (category) {
+    case 'Hardware':
+      return 'bg-emerald-50 text-emerald-700 border border-emerald-100';
+    case 'Audio':
+      return 'bg-purple-50 text-purple-700 border border-purple-100';
+    case 'Cables':
+      return 'bg-sky-50 text-sky-700 border border-sky-100';
+    case 'Accessories':
+      return 'bg-rose-50 text-rose-700 border border-rose-100';
+    case 'Office Supply':
+      return 'bg-amber-50 text-amber-700 border border-amber-100';
+    case 'Camera':
+      return 'bg-indigo-50 text-indigo-700 border border-indigo-100';
+    case 'Lighting':
+      return 'bg-yellow-50 text-yellow-800 border border-yellow-100';
+    default:
+      return 'bg-slate-100 text-slate-700 border border-slate-200';
+  }
+}
+
 export function Home() {
   const { equipment } = useEquipment();
   const { addToCart } = useCart();
@@ -99,10 +120,10 @@ export function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.05 }}
               key={item.id}
-              className={`bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all overflow-hidden flex ${viewMode === 'list' ? 'flex-row items-center p-4 gap-6' : 'flex-col'}`}
+              className={`bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all overflow-hidden flex ${viewMode === 'list' ? 'flex-row items-center p-3.5 gap-4' : 'flex-col'}`}
             >
               {viewMode === 'grid' && (
-                <div className="h-40 bg-slate-50 border-b border-slate-100 flex items-center justify-center relative overflow-hidden">
+                <div className="h-34 bg-slate-50 border-b border-slate-100 flex items-center justify-center relative overflow-hidden">
                   {item.imageUrl ? (
                     <img 
                       src={item.imageUrl} 
@@ -111,15 +132,15 @@ export function Home() {
                       referrerPolicy="no-referrer"
                     />
                   ) : (
-                    <div className="w-20 h-20 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center text-slate-300">
-                      <Package size={32} />
+                    <div className="w-16 h-16 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center text-slate-300">
+                      <Package size={28} />
                     </div>
                   )}
                 </div>
               )}
 
               {viewMode === 'list' && (
-                <div className="w-14 h-14 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-center shrink-0 overflow-hidden">
+                <div className="w-12 h-12 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-center shrink-0 overflow-hidden">
                   {item.imageUrl ? (
                     <img 
                       src={item.imageUrl} 
@@ -128,36 +149,36 @@ export function Home() {
                       referrerPolicy="no-referrer"
                     />
                   ) : (
-                    <Package size={24} className="text-slate-300" />
+                    <Package size={20} className="text-slate-300" />
                   )}
                 </div>
               )}
               
-              <div className={`p-5 flex-1 flex ${viewMode === 'list' ? 'flex-row items-center justify-between' : 'flex-col'}`}>
+              <div className={`p-4 flex-1 flex ${viewMode === 'list' ? 'flex-row items-center justify-between' : 'flex-col justify-between'}`}>
                 <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className={`px-2 py-0.5 rounded text-xs font-medium ${item.type === 'Loanable' ? 'bg-blue-50 text-blue-700' : 'bg-orange-50 text-orange-700'}`}>
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${item.type === 'Loanable' ? 'bg-blue-50 text-blue-700 border border-blue-100' : 'bg-orange-50 text-orange-700 border border-orange-100'}`}>
                       {item.type === 'Loanable' ? 'ยืม-คืน' : 'เบิกจ่าย'}
                     </span>
-                    <span className="text-xs text-slate-500 bg-slate-100 px-2 py-0.5 rounded">{item.category}</span>
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${getCategoryBadgeStyle(item.category)}`}>{item.category}</span>
                   </div>
-                  <h3 className="font-semibold text-slate-900 leading-tight mb-1">{item.name}</h3>
+                  <h3 className="font-bold text-slate-800 leading-tight mb-1 text-sm">{item.name}</h3>
                   
-                  <div className="flex items-center gap-2 mt-3">
+                  <div className="flex items-center gap-2 mt-2">
                     <div className="flex items-center gap-1.5">
                       <div className={`w-2 h-2 rounded-full ${item.status === 'Available' ? 'bg-green-500' : item.status === 'Low Stock' ? 'bg-amber-500' : 'bg-red-500'}`}></div>
-                      <span className="text-sm font-medium text-slate-700">{item.availableUnits} / {item.totalUnits} ชิ้น</span>
+                      <span className="text-xs font-semibold text-slate-600">{item.availableUnits} / {item.totalUnits} ชิ้น</span>
                     </div>
                   </div>
                 </div>
 
-                <div className={viewMode === 'grid' ? "mt-5" : ""}>
+                <div className={viewMode === 'grid' ? "mt-3.5" : ""}>
                   <button 
                     onClick={() => handleAddToCart(item)}
                     disabled={item.availableUnits === 0}
-                    className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-green-600 hover:bg-green-700 disabled:bg-slate-200 disabled:text-slate-400 text-white font-medium rounded-xl transition-colors"
+                    className="w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-green-600 hover:bg-green-700 disabled:bg-slate-200 disabled:text-slate-400 text-white text-xs font-semibold rounded-xl transition-colors shadow-xs"
                   >
-                    <Plus size={18} />
+                    <Plus size={16} />
                     <span>เพิ่มลงตะกร้า</span>
                   </button>
                 </div>

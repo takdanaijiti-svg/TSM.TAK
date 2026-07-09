@@ -18,6 +18,27 @@ const PRESET_EQ_IMAGES = [
   'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&q=80&w=150&h=150', // Tablet/Accessories
 ];
 
+function getCategoryBadgeStyle(category: string) {
+  switch (category) {
+    case 'Hardware':
+      return 'bg-emerald-50 text-emerald-700 border border-emerald-100';
+    case 'Audio':
+      return 'bg-purple-50 text-purple-700 border border-purple-100';
+    case 'Cables':
+      return 'bg-sky-50 text-sky-700 border border-sky-100';
+    case 'Accessories':
+      return 'bg-rose-50 text-rose-700 border border-rose-100';
+    case 'Office Supply':
+      return 'bg-amber-50 text-amber-700 border border-amber-100';
+    case 'Camera':
+      return 'bg-indigo-50 text-indigo-700 border border-indigo-100';
+    case 'Lighting':
+      return 'bg-yellow-50 text-yellow-800 border border-yellow-100';
+    default:
+      return 'bg-slate-100 text-slate-700 border border-slate-200';
+  }
+}
+
 export function Inventory() {
   const { equipment, addEquipment, updateEquipment, deleteEquipment, reportMaintenance, adjustAvailableQuantity } = useEquipment();
   const { user } = useAuth();
@@ -285,7 +306,7 @@ export function Inventory() {
 
                     {/* Category */}
                     <td className="px-6 py-4">
-                      <span className="text-slate-600 bg-slate-100 px-2.5 py-1 rounded-lg text-xs font-semibold">
+                      <span className={`px-2.5 py-1 rounded-lg text-xs font-semibold ${getCategoryBadgeStyle(eq.category)}`}>
                         {eq.category}
                       </span>
                     </td>
